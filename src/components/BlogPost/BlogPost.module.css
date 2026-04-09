@@ -1,0 +1,95 @@
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 2rem 2.25rem;
+  transition: border-color 0.2s;
+}
+
+.card:hover {
+  border-color: #3a3a48;
+}
+
+.cardHeader {
+  margin-bottom: 1.25rem;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-bottom: 0.6rem;
+}
+
+.author {
+  font-weight: 500;
+  color: var(--accent);
+}
+
+.dot { color: var(--border); }
+
+.title {
+  font-size: 1.45rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--text);
+}
+
+.content {
+  font-size: 0.95rem;
+  color: #b0b0c8;
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.likeBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.4rem 0.9rem;
+  cursor: pointer;
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.2s;
+}
+
+.likeBtn:hover {
+  border-color: #c06060;
+  color: #fa6d6d;
+}
+
+.likeBtn.liked {
+  background: rgba(250, 109, 109, 0.1);
+  border-color: #fa6d6d;
+  color: #fa6d6d;
+}
+
+.likeIcon {
+  font-size: 1rem;
+  transition: transform 0.15s;
+}
+
+.likeBtn.liked .likeIcon {
+  transform: scale(1.2);
+}
+
+@media (max-width: 600px) {
+  .card {
+    padding: 1.5rem 1.25rem;
+  }
+  .title {
+    font-size: 1.2rem;
+  }
+}
