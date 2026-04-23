@@ -41,7 +41,7 @@ export default function IndividualPostPage() {
   if (error) {
     return (
       <main className={styles.main}>
-        <Link to="/" className={styles.back}>← Back to all posts</Link>
+        <Link to="/blog" className={styles.back}>← Back to all posts</Link>
         <ErrorMessage message={error} />
       </main>
     );
@@ -50,7 +50,7 @@ export default function IndividualPostPage() {
   if (!post) {
     return (
       <main className={styles.main}>
-        <Link to="/" className={styles.back}>← Back to all posts</Link>
+        <Link to="/blog" className={styles.back}>← Back to all posts</Link>
         <p className={styles.loading}>Loading post…</p>
       </main>
     );
@@ -58,7 +58,7 @@ export default function IndividualPostPage() {
 
   return (
     <main className={styles.main}>
-      <Link to="/" className={styles.back}>← Back to all posts</Link>
+      <Link to="/blog" className={styles.back}>← Back to all posts</Link>
 
       <article className={styles.article}>
         <header className={styles.header}>

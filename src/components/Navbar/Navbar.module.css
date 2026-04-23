@@ -80,3 +80,41 @@
   .nav { gap: 1rem; }
   .navLink { font-size: 0.8rem; }
 }
+.authArea {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.greeting {
+  font-size: 0.875rem;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.loginBtn {
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.35rem 1rem;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  letter-spacing: 0.02em;
+  transition: background 0.2s ease;
+}
+
+.loginBtn:hover { background: var(--accent-dim); }
+
+.logoutBtn {
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.35rem 1rem;
+  border-radius: 999px;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.logoutBtn:hover { border-color: var(--danger); color: var(--danger); }

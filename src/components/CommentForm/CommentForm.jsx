@@ -1,9 +1,11 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import styles from './CommentForm.module.css';
 
 export default function CommentForm({ postId, comments, setComments }) {
-  const [name, setName] = useState('');
+  const { currentUser } = useAuth();
   const [text, setText] = useState('');
   const [errors, setErrors] = useState({});
   const [submitError, setSubmitError] = useState(null);
@@ -11,7 +13,6 @@ export default function CommentForm({ postId, comments, setComments }) {
 
   function validate() {
     const e = {};
-    if (!name.trim()) e.name = 'Name is required.';
     if (!text.trim()) e.text = 'Comment cannot be empty.';
     return e;
   }
@@ -26,15 +27,14 @@ export default function CommentForm({ postId, comments, setComments }) {
     fetch(`https://jsonplaceholder.typicode.com/posts/${postId}/comments`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: name.trim(), body: text.trim(), email: '' }),
+      body: JSON.stringify({ name: currentUser.displayName, body: text.trim(), email: '' }),
     })
       .then((res) => {
         if (!res.ok) throw new Error('Failed to post comment.');
         return res.json();
       })
       .then((newComment) => {
-        setComments((prev) => [...prev, newComment]);
-        setName('');
+        setComments((prev) => [...prev, { ...newComment, name: currentUser.displayName }]);
         setText('');
         setErrors({});
       })
@@ -49,39 +49,41 @@ export default function CommentForm({ postId, comments, setComments }) {
         <span className={styles.count}>{comments.length}</span>
       </h3>
 
-      <div className={styles.form}>
-        <div className={styles.field}>
-          <label className={styles.label} htmlFor={`name-${postId}`}>Name</label>
-          <input
-            id={`name-${postId}`}
-            className={`${styles.input} ${errors.name ? styles.inputError : ''}`}
-            type="text"
-            placeholder="Your name"
-            value={name}
-            onChange={(e) => { setName(e.target.value); setErrors((p) => ({ ...p, name: '' })); }}
-          />
-          {errors.name && <span className={styles.error}>{errors.name}</span>}
+      {currentUser ? (
+        <div className={styles.form}>
+          <div className={styles.field}>
+            <label className={styles.label}>Posting as</label>
+            <div className={styles.userBadge}>
+              <span className={styles.userAvatar}>{currentUser.displayName.charAt(0)}</span>
+              <span className={styles.userName}>{currentUser.displayName}</span>
+            </div>
+          </div>
+
+          <div className={styles.field}>
+            <label className={styles.label} htmlFor={`comment-${postId}`}>Comment</label>
+            <textarea
+              id={`comment-${postId}`}
+              className={`${styles.textarea} ${errors.text ? styles.inputError : ''}`}
+              placeholder="Write a comment…"
+              rows={3}
+              value={text}
+              onChange={(e) => { setText(e.target.value); setErrors((p) => ({ ...p, text: '' })); }}
+            />
+            {errors.text && <span className={styles.error}>{errors.text}</span>}
+          </div>
+
+          {submitError && <ErrorMessage message={submitError} />}
+
+          <button className={styles.btn} onClick={handleSubmit} disabled={submitting}>
+            {submitting ? 'Posting…' : 'Submit'}
+          </button>
         </div>
-
-        <div className={styles.field}>
-          <label className={styles.label} htmlFor={`comment-${postId}`}>Comment</label>
-          <textarea
-            id={`comment-${postId}`}
-            className={`${styles.textarea} ${errors.text ? styles.inputError : ''}`}
-            placeholder="Write a comment…"
-            rows={3}
-            value={text}
-            onChange={(e) => { setText(e.target.value); setErrors((p) => ({ ...p, text: '' })); }}
-          />
-          {errors.text && <span className={styles.error}>{errors.text}</span>}
+      ) : (
+        <div className={styles.loginPrompt}>
+          <p>You must be logged in to leave a comment.</p>
+          <Link to="/login" className={styles.loginLink}>Log in to comment →</Link>
         </div>
-
-        {submitError && <ErrorMessage message={submitError} />}
-
-        <button className={styles.btn} onClick={handleSubmit} disabled={submitting}>
-          {submitting ? 'Posting…' : 'Submit'}
-        </button>
-      </div>
+      )}
 
       <div className={styles.commentList}>
         {comments.length === 0 ? (
