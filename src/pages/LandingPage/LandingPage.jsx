@@ -3,9 +3,9 @@ import { useAuth } from '../../context/AuthContext';
 import styles from './LandingPage.module.css';
 
 const FEATURES = [
-  { icon: '✦', title: 'Real posts', desc: 'Pull from a live API — every post is fresh.' },
-  { icon: '◈', title: 'Leave comments', desc: 'Log in and join the discussion on any post.' },
-  { icon: '◐', title: 'Light & dark', desc: 'Toggle themes, it remembers your preference.' },
+  { icon: '✦', title: 'Posts', desc: 'Fetches real posts from JSONPlaceholder. Nothing fancy, just data.' },
+  { icon: '◈', title: 'Comments', desc: 'Log in and drop a comment on any post. Name gets filled in automatically.' },
+  { icon: '◐', title: 'Light & dark', desc: 'Theme toggle in the navbar. Remembers your pick across page reloads.' },
 ];
 
 export default function LandingPage() {
@@ -16,18 +16,17 @@ export default function LandingPage() {
       {/* Hero */}
       <section className={styles.hero}>
         <div className={styles.heroInner}>
-          <span className={styles.badge}>A React blog app</span>
+          <span className={styles.badge}>ITIS 3135 Final Project</span>
           <h1 className={styles.headline}>
-            Ideas worth <span className={styles.accent}>reading</span>.<br />
-            Thoughts worth <span className={styles.accent}>sharing</span>.
+            Lars<span className={styles.accent}>.blog</span>
           </h1>
           <p className={styles.subtext}>
-            A minimal blog built with React, Context API, and real data. Browse posts, join the conversation, and make it yours.
+            A React blog app built for ITIS 3135. Uses the JSONPlaceholder API for posts and comments, React Router for navigation, and Context API for theme and auth state.
           </p>
           <div className={styles.ctas}>
             {currentUser ? (
               <>
-                <Link to="/blog" className={styles.ctaPrimary}>Explore Blog →</Link>
+                <Link to="/blog" className={styles.ctaPrimary}>Go to blog</Link>
                 <span className={styles.loggedInNote}>Signed in as <strong>{currentUser.displayName}</strong></span>
               </>
             ) : (
@@ -53,7 +52,7 @@ export default function LandingPage() {
               quia et suscipit suscipit recusandae consequuntur expedita et cum reprehenderit molestiae...
             </div>
             <div className={styles.cardFooter}>
-              <span className={styles.tag}>Read more →</span>
+              <span className={styles.tag}>Read more</span>
               <span className={styles.tag}>12 comments</span>
             </div>
           </div>
@@ -75,10 +74,10 @@ export default function LandingPage() {
 
       {/* CTA strip */}
       <section className={styles.strip}>
-        <h2 className={styles.stripHeading}>Ready to dive in?</h2>
+        <h2 className={styles.stripHeading}>Take a look around</h2>
         <div className={styles.ctas}>
           <Link to="/blog" className={styles.ctaPrimary}>Read the blog</Link>
-          {!currentUser && <Link to="/login" className={styles.ctaSecondary}>Create an account</Link>}
+          {!currentUser && <Link to="/login" className={styles.ctaSecondary}>Sign in</Link>}
         </div>
       </section>
     </main>
